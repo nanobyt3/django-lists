@@ -1,0 +1,55 @@
+<!-- base_list.html -->
+{% extends "base_list.html" %}
+      
+{% block content %}
+
+  {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info">
+          <strong>{{message}}</strong>
+        </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="row">
+    <div class="col-xs-6 alert text-left">
+      <a href="/lists" class="btn btn-default"><span class="glyphicon glyphicon-list"></span>&nbsp;All Lists</a>
+    </div>
+    <div class="col-xs-6 alert text-right">
+      <a href="/lists/add/list-item/{{list_id}}" class="btn btn-warning"><span class="glyphicon glyphicon-star"></span>&nbsp;New List Item</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in list %}
+            <tr {% if i.status == True %} class="success" {% endif %}>
+              <td>
+                <b>{{i.title}} [<span class="text-warning">#{{i.id}}</span>]</b>
+                <small><i>{{i.details|linebreaks}}</i></small>
+              </td>
+              <td>
+                {% if i.status == True %}
+                  <a href="/lists/toggle-status/list-item/{{i.id}}" value="remove" type="submit"  class="btn btn-default" title="Mark Incomplete"><span class="glyphicon glyphicon-repeat"></span></a>
+                {% else %}
+                  <a href="/lists/toggle-status/list-item/{{i.id}}" value="remove" type="submit"  class="btn btn-primary" title="Mark Complete"><span class="glyphicon glyphicon-ok"></span></a>
+                {% endif %}
+                &nbsp;
+                <a href="/lists/edit/list-item/{{i.id}}" value="remove" type="submit"  class="btn btn-primary" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
+                &nbsp;
+                <a href="/lists/delete/list-item/{{i.id}}" value="remove" type="submit"  class="btn btn-danger" title="Delete" onclick="return confirm('Do you want to delete item \'{{i.title}}\'?')"><span class="glyphicon glyphicon-trash"></span></a>
+              </td>
+            </tr>
+          {% endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

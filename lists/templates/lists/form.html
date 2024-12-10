@@ -1,0 +1,43 @@
+<!-- base_list.html -->
+{% extends "base_list.html" %}
+      
+{% block content %}
+
+  {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info">
+          <strong>{{message}}</strong>
+        </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="row">
+    <div class="alert text-left">
+      Back to:&nbsp;
+      {% if list_id %}
+          <a href="/lists/view/list/{{list_id}}" class="btn btn-default"><span class="glyphicon glyphicon-tasks"></span>&nbsp;Back to Parent List</a>
+          &nbsp;
+      {% endif %}
+      <a href="/lists" class="btn btn-default"><span class="glyphicon glyphicon-list"></span>&nbsp;All Lists</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" >
+      <div class="wrapper">
+        <form method="POST">
+          {% csrf_token %}
+          {% load crispy_forms_tags %}
+          {% crispy form %}
+          
+          {% if list_id %}
+            <a href="/lists/view/list/{{list_id}}" class="btn btn-danger">Cancel</a>
+            &nbsp;
+          {% else %}
+            <a href="/lists" class="btn btn-danger">Cancel</a>
+          {% endif %}
+          <input type="submit" class="btn btn-success" value="submit" />
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

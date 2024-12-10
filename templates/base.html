@@ -1,0 +1,40 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Django - Lists{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+
+  <body class="container-fluid">
+    <div class="row bg-primary">
+      <h1 class="text-center"><i>
+        {% block heading %}Django - Lists{% endblock %}
+      </i></h1>
+      <hr />
+      <div style="margin-top:-10px">
+        {% if user.is_authenticated %}
+          <div class="col-xs-6" style="padding:7px 15px; margin-bottom: 10px;">Hi {{ user.username }}! </div>
+          <div class="col-xs-6" style="margin-bottom: 10px;">
+            <form action="{% url 'logout' %}" method="post" class="text-right">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Log Out</button>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <br/>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+
+</html>

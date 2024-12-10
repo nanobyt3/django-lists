@@ -1,0 +1,55 @@
+<!-- base_list.html -->
+{% extends "base_list.html" %}
+      
+{% block content %}
+
+  {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info">
+          <strong>{{message}}</strong>
+        </div>
+    {% endfor %}
+  {% endif %}
+  
+  <div class="row">
+    <div class="col-xs-6 alert text-left">
+      {% if request.path == "/lists/archive" %}
+        <a href="/lists" class="btn btn-default"><span class="glyphicon glyphicon-list"></span>&nbsp;All Lists</a>
+        &nbsp;
+      {%else%}
+        <a href="/lists/archive" class="btn btn-default"><span class="glyphicon glyphicon-list"></span>&nbsp;View Archives</a>
+        &nbsp;
+      {% endif %}
+    </div>
+    <div class="col-xs-6 alert text-right">
+      <a href="/lists/add/list" class="btn btn-warning"><span class="glyphicon glyphicon-star"></span>&nbsp;Create new list</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table table-responsive table-striped">
+        <thead>
+          <tr>
+            <th>List Name</th>
+            <th>Operations</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in list %}
+            <tr>
+              <td>
+                <a href="/lists/view/list/{{i.id}}"><b>{{i.title}} [<span class="text-warning">#{{i.id}}</span>]</b></a>
+                <small><i>{{i.details|linebreaks}}</i></small>
+              </td>
+              <td>
+                <a href="/lists/edit/list/{{i.id}}" value="remove" type="submit"  class="btn btn-primary" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
+                &nbsp;
+                <a href="/lists/delete/list/{{i.id}}" value="remove" type="submit"  class="btn btn-danger" title="Delete" onclick="return confirm('Do you want to delete list \'{{i.title}}\'?')"><span class="glyphicon glyphicon-trash"></span></a>
+              </td>
+            </tr>
+          {% endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
